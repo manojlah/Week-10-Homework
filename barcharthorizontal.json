@@ -1,0 +1,65 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 250,
+  "height": 800,
+  "title": "Top 10 nations at the 2008 Olympics with the highest medal tally",
+  "data": {
+    "url": "https://raw.githubusercontent.com/manojlah/Test/main/barchartdata.csv"
+  },
+  "params": [
+    {
+      "name": "continentselection",
+      "bind": {
+        "input": "select",
+        "options": [null, "Asia", "Europe", "North America", "Oceania"],
+        "labels": ["Show All", "Asia", "Europe", "North America", "Oceania"],
+        "name": "Filter by continent:"
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "continentselection == null || datum.continent == continentselection"
+    }
+  ],
+  "encoding": {
+    "y": {"field": "Country"},
+    "x": {"field": "Count", "type": "quantitative", "title": "No. of Medals"},
+    "yOffset": {"field": "Medal", "sort": "y"},
+    "color": {"field": "Medal", "sort": "y"},
+    "tooltip": [
+      {"field": "Country", "type": "nominal"},
+      {"field": "Medal", "type": "nominal", "title": "Medal Type"},
+      {"field": "Count", "type": "quantitative", "title": "No. of Medals"}
+    ],
+    "opacity": {
+      "condition": {"param": "medalselection", "value": 0.9},
+      "value": 0.1
+    }
+  },
+  "layer": [
+    {
+      "mark": "bar",
+      "params": [
+        {
+          "name": "medalselection",
+          "select": {"type": "point", "fields": ["Medal"]},
+          "bind": "legend"
+        }
+      ]
+    },
+    {
+      "mark": {"type": "text", "align": "center", "xOffset": 10},
+      "encoding": {"text": {"aggregate": "sum", "field": "Count"}}
+    },
+    {
+      "mark": {"type": "text", "align": "center", "xOffset": 50},
+      "encoding": {
+        "text": {"field": "cn"},
+        "color": {"value": "black"},
+        "stroke": {"value": "black"}
+      }
+    }
+  ],
+  "config": {}
+}
