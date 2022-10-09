@@ -49,10 +49,6 @@
       ]
     },
     {
-      "mark": {"type": "text", "align": "center", "yOffset": -8},
-      "encoding": {"text": {"aggregate": "sum", "field": "Count"}}
-    },
-    {
       "mark": {"type": "text", "align": "center", "yOffset": 15},
       "encoding": {
         "text": {"field": "cn"},
